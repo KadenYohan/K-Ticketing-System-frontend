@@ -1,111 +1,1173 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Dynamic HSL Palette - Deep Indigo and Amethyst Violet */
+  --primary-h: 265;
+  --primary-s: 85%;
+  --primary-l: 60%;
+  
+  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+  --primary-hover: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 8%));
+  --primary-glow: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.3);
+  
+  --accent: hsl(230, 90%, 65%);
+  --accent-glow: hsla(230, 90%, 65%, 0.35);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --success: hsl(142, 70%, 45%);
+  --success-bg: hsl(142, 70%, 95%);
+  --success-glow: hsla(142, 70%, 45%, 0.3);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  --danger: hsl(350, 80%, 55%);
+  --danger-bg: hsl(350, 80%, 96%);
+  
+  --warning: hsl(38, 92%, 50%);
+  --warning-bg: hsl(38, 92%, 95%);
+
+  --text: #64748b;             /* slate-500: soft secondary labels */
+  --text-heading: #0f172a;    /* slate-950: deep charcoal for primary headings */
+  --text-body: #334155;       /* slate-700: comfortable body copy */
+  --bg: hsl(240, 25%, 98%);
+  
+  --card-bg: hsl(0, 0%, 100%);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --border: hsl(240, 15%, 93%);
+  
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.5);
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --border-radius: 16px;
+  
+  font-family: var(--font-sans);
   color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  background-color: var(--bg);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Premium Dark Mode Override */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --text: hsl(240, 10%, 75%);
+    --text-heading: hsl(0, 0%, 98%);
+    --bg: hsl(240, 20%, 8%);
+    
+    --card-bg: hsl(240, 16%, 12%);
+    --card-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5), 0 1px 5px rgba(0, 0, 0, 0.2);
+    --border: hsl(240, 12%, 18%);
+    
+    --glass-bg: rgba(24, 24, 30, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    
+    --success-bg: hsl(142, 60%, 12%);
+    --danger-bg: hsl(350, 60%, 13%);
+    --warning-bg: hsl(38, 60%, 12%);
   }
 }
 
 body {
   margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+  overflow: hidden; /* prevent double scrollbars */
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* ───────────────────────────────────
+   App Shell — fixed nav + scrollable main
+─────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Enables smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-scroll-area {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ───────────────────────────────────
+   Global Navigation Bar — dark tech
+─────────────────────────────────── */
+.global-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #0f172a;  /* slate-950 deep navy */
+  border-bottom: 1px solid #1e293b; /* slate-800 hairline */
+  height: 52px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
+.global-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.global-nav-brand {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: #f8fafc;         /* slate-50 */
+  margin-right: 8px;
+  white-space: nowrap;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.global-nav-tabs {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: 2px;
+  flex: 1;
+}
+
+.global-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 14px;
+  height: 100%;
+  text-decoration: none;
+  color: #94a3b8;          /* slate-400 — inactive */
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.global-nav-tab:hover {
+  color: #e2e8f0;          /* slate-200 on hover */
+  border-bottom-color: rgba(99, 102, 241, 0.4);
+}
+
+.global-nav-tab-active {
+  color: #f8fafc !important;   /* slate-50 active */
+  border-bottom-color: #6366f1 !important; /* indigo-500 indicator */
+  background: rgba(99, 102, 241, 0.08);    /* subtle indigo tint */
+}
+
+.nav-tab-icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.nav-tab-label {
+  font-size: 0.8rem;
+}
+
+/* Micro-Animations & Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translate(-50%, 100%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 var(--primary-glow); }
+  70% { box-shadow: 0 0 0 8px rgba(170, 59, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(170, 59, 255, 0); }
+}
+
+@keyframes successPulse {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.85; }
+}
+
+@keyframes cashSlotPulse {
+  0% { box-shadow: 0 0 0 0 var(--success-glow), inset 0 0 0 0 var(--success-glow); border-color: var(--success); }
+  50% { box-shadow: 0 0 15px 4px var(--success-glow), inset 0 0 10px 2px var(--success-glow); border-color: hsl(142, 80%, 55%); }
+  100% { box-shadow: 0 0 0 0 var(--success-glow), inset 0 0 0 0 var(--success-glow); border-color: var(--success); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.scale-in {
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Typography Overrides - Fix 1: Deep slate hierarchy */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-top: 0;
+  letter-spacing: -0.035em;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: 2.5rem;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #0f172a 30%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
 }
-p {
+
+h3 {
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+p, span, label {
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* Utility: secondary/description text */
+.text-secondary {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Layout Containers */
+.mobile-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px 16px 120px; /* added bottom padding to clear the floating cinema bar */
+  box-sizing: border-box;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.app-subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+  margin-top: 4px;
+}
+
+/* Premium Gorgeous Cards */
+.bus-card, .payment-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  transition: var(--transition);
+}
+
+.bus-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-glow);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+}
+
+.bus-card-full {
+  opacity: 0.65;
+  filter: grayscale(30%);
+}
+
+.bus-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.bus-time-wrapper, .bus-price-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.bus-time-label, .bus-price-unit {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.bus-time {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  font-family: var(--font-heading);
+}
+
+.bus-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: var(--font-heading);
+}
+
+.bus-seats-info {
+  margin-bottom: 16px;
+}
+
+.seats-indicator {
+  height: 6px;
+  width: 100%;
+  background-color: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.seats-indicator-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+  border-radius: 3px;
+  transition: width 0.5s ease-out;
+}
+
+.seats-count-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+/* ───────────────────────────────────
+   Compact High-Density Seat Map
+─────────────────────────────────── */
+.seat-map-compact {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px 16px;
+  margin: 10px 0;
+  box-shadow: var(--card-shadow);
+}
+
+.seat-map-front-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1.5px dashed var(--border);
+}
+
+.seat-map-front-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.5;
+}
+
+.seat-map-driver-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  opacity: 0.65;
+}
+
+/* Inline legend */
+.seat-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.legend-available .legend-dot { background: #6ee7b7; border: 1px solid #a7f3d0; }
+.legend-selected  .legend-dot { background: #6366f1; }
+.legend-taken     .legend-dot { background: #fca5a5; border: 1px solid #fecaca; }
+
+/* High-density 5-column grid: A B | aisle | C D */
+.seat-grid-dense {
+  display: grid;
+  grid-template-columns: 1fr 1fr 18px 1fr 1fr;
+  column-gap: 5px;
+  row-gap: 6px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Override seat-btn for compact size */
+.seat-grid-dense .seat-btn {
+  width: 100%;
+  aspect-ratio: unset;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Legacy: .seat-map-container is deprecated — use .seat-map-compact */
+.seat-map-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+  margin: 10px 0;
+  box-shadow: var(--card-shadow);
+}
+
+.driver-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--border);
+}
+
+.front-curve-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.driver-icon-wrapper {
+  color: var(--text-heading);
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Fix 3: Softer emerald seat map with row gap spacing */
+.grid-seat-layout {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 8px;
+  row-gap: 16px; /* gap-y-4: increased vertical spacing between rows */
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.seat-btn {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 1px solid #a7f3d0; /* emerald-200 soft border */
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #065f46;             /* emerald-800 deep text on soft bg */
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: var(--font-heading);
+  background: #ecfdf5;        /* emerald-50: soft professional mint */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.seat-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 4px;
+  right: 4px;
+  height: 3px;
+  background: rgba(16, 185, 129, 0.18);
+  border-radius: 2px;
+}
+
+/* hover:scale-105 smooth transition */
+.seat-btn:hover:not(:disabled) {
+  transform: scale(1.08);
+  background: #d1fae5;        /* emerald-100 on hover */
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  border-color: #6ee7b7;      /* emerald-300 */
+}
+
+.seat-btn-selected {
+  background: #4f46e5 !important; /* solid indigo-600 when selected */
+  border-color: #4f46e5 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+  animation: none;
+}
+
+.seat-btn-reserved {
+  background: hsl(240, 5%, 92%) !important;
+  border-color: hsl(240, 5%, 82%) !important;
+  color: hsl(240, 5%, 55%) !important;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.seat-btn-booked, .seat-btn-boarded {
+  background: #fef2f2 !important;  /* red-50 soft background */
+  border-color: #fca5a5 !important; /* red-300 */
+  color: #991b1b !important;        /* red-800 text */
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.seat-aisle {
+  grid-column: span 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.seat-aisle::after {
+  content: '';
+  width: 2px;
+  height: 80%;
+  background-color: var(--border);
+  opacity: 0.4;
+  border-radius: 1px;
+}
+
+/* ───────────────────────────────────
+   Apple Wallet Skeuomorphic Ticket Card — Compressed
+─────────────────────────────────── */
+.ticket-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  overflow: visible;
+  margin: 10px 0;
+  max-height: 72vh;
+  overflow-y: auto;
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;     /* compressed from 28px 24px */
+  text-align: center;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+.ticket-route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.ticket-route-city {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;     /* compressed from 2.2rem */
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #fff;
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.ticket-route-arrow {
+  font-size: 1.1rem;
+  opacity: 0.7;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.ticket-punch-container {
+  position: relative;
+  height: 2px;
+  margin: 20px 0;
+  z-index: 5;
+}
+
+.ticket-punch-line {
+  border-top: 2.5px dashed var(--border);
+  margin: 0 10px;
+}
+
+.ticket-punch-left, .ticket-punch-right {
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg); /* matches viewport background to clip card */
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: inset 1px 0 3px rgba(0,0,0,0.03);
+}
+
+.ticket-punch-left {
+  left: -10px;
+  border-left-color: transparent;
+}
+
+.ticket-punch-right {
+  right: -10px;
+  border-right-color: transparent;
+}
+
+.ticket-body {
+  padding: 6px 16px 14px;  /* compressed from 8px 24px 28px */
+}
+
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;        /* was 12px */
+  font-size: 0.875rem;
+}
+
+.ticket-row span {
+  opacity: 0.55;
+  font-weight: 500;
+}
+
+.ticket-row strong {
+  color: var(--text-heading);
+  font-weight: 700;
+}
+
+.ticket-qr-section {
+  text-align: center;
+  margin-top: 12px;         /* was 24px */
+}
+
+/* QR code display constrained to max 110px so it never dominates */
+.ticket-qr-section > * {
+  max-width: 110px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ticket-id {
+  font-family: monospace;
+  font-size: 0.72rem;
+  margin-top: 8px;
+  opacity: 0.38;
+  letter-spacing: 0.04em;
+}
+
+/* Cinema Slide-Up Floating Selection Bar */
+.floating-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--glass-border);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  box-shadow: 0 -15px 35px -5px rgba(0, 0, 0, 0.15);
+  padding: 20px 24px 30px;
+  box-sizing: border-box;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+  opacity: 0;
+}
+
+.floating-bar-active {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.floating-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.floating-seats-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.floating-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.floating-values {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.floating-price-details {
+  text-align: right;
+}
+
+.floating-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-family: var(--font-heading);
+}
+
+/* High-End Fintech UI & Cash Slot Acceptor Simulation */
+.fintech-amount {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  text-align: center;
+  font-family: var(--font-heading);
+  letter-spacing: -0.04em;
+  margin: 12px 0 24px;
+}
+
+.cash-slot-wrapper {
+  background: var(--card-bg);
+  border: 2px dashed var(--success);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  transition: var(--transition);
+  animation: cashSlotPulse 2.5s infinite ease-in-out;
+}
+
+.cash-slot-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--success);
+  margin-bottom: 12px;
+}
+
+.cash-slot-opening {
+  height: 14px;
+  width: 160px;
+  background: #0d0d0d;
+  margin: 16px auto;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 5px rgba(255,255,255,0.1), 0 0 10px var(--success-glow);
+  position: relative;
+}
+
+.cash-slot-opening::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  right: 10px;
+  height: 4px;
+  background: var(--success);
+  opacity: 0.8;
+  border-radius: 2px;
+  box-shadow: 0 0 6px var(--success);
+  animation: successPulse 1.5s infinite;
+}
+
+/* Smart Status Badges - Stripe Dashboard Style */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background-color: currentColor;
+}
+
+.badge-available { background-color: var(--success-bg); color: var(--success); }
+.badge-reserved { background-color: var(--warning-bg); color: var(--warning); }
+.badge-booked { background-color: var(--danger-bg); color: var(--danger); }
+.badge-boarded { background-color: hsl(200, 70%, 92%); color: hsl(200, 70%, 42%); }
+.badge-pending { background-color: var(--warning-bg); color: var(--warning); }
+.badge-success { background-color: var(--success-bg); color: var(--success); }
+.badge-danger { background-color: var(--danger-bg); color: var(--danger); }
+.badge-secondary { background-color: var(--border); color: var(--text); }
+
+/* Animated Conductor Validation Badge */
+.validation-icon-scale {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.validation-icon-success {
+  background-color: var(--success);
+  box-shadow: 0 10px 25px var(--success-glow);
+}
+
+.validation-icon-danger {
+  background-color: var(--danger);
+  box-shadow: 0 10px 25px rgba(244, 67, 54, 0.25);
+}
+
+/* Beautiful Button Design System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  padding: 12px 24px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.btn-large {
+  width: 100%;
+  padding: 16px 28px;
+  font-size: 1rem;
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.8rem;
+}
+
+/* Fix 2: Solid premium colors instead of heavy gradients */
+.btn-primary {
+  background-color: #4f46e5; /* indigo-600 solid premium purple */
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #4338ca; /* indigo-700 on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+}
+
+.btn-gradient {
+  background: #4f46e5; /* solid indigo-600 replacing heavy blue-purple gradient */
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+.btn-gradient:hover:not(:disabled) {
+  background: #4338ca;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.btn-gradient:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2);
+}
+
+.btn-secondary {
+  background-color: var(--card-bg);
+  border: 1px solid #e2e8f0; /* slate-200 subtle border */
+  color: #334155;             /* slate-700 */
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: #f8fafc; /* slate-50 */
+  border-color: #cbd5e1;     /* slate-300 */
+}
+
+.btn-disabled, .btn:disabled {
+  background-color: #f1f5f9 !important; /* slate-100 */
+  color: #94a3b8 !important;            /* slate-400 */
+  opacity: 1;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Fix 2: Destination buttons capped at readable max-width */
+.btn-dest {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 12px;
+  padding: 18px 24px;
+  font-size: 1.1rem;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-radius: 14px;
+}
+
+/* Fix 4: Structurally isolated alert boxes, never clipping into content */
+.alert {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  /* Isolated from boarding pass and ticket card below */
+  contain: layout style;
+}
+
+.alert::before {
+  content: '⚠';
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.alert-error {
+  background-color: #fef2f2; /* red-50 */
+  color: #b91c1c;            /* red-700 */
+  border: 1px solid #fecaca; /* red-200 */
+}
+
+.alert-error::before { content: '✕'; }
+
+.alert-warning {
+  background-color: #fffbeb; /* amber-50 */
+  color: #92400e;            /* amber-800 */
+  border: 1px solid #fde68a; /* amber-200 */
+}
+
+/* ───────────────────────────────────
+   Checkout Panel — responsive side-by-side
+─────────────────────────────────── */
+.checkout-panel {
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 18px 20px;           /* tighter than before */
+  margin-bottom: 0;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.03);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Side-by-side on wider viewports */
+.checkout-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 600px) {
+  .checkout-panels-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Compact inline timer — accent text line */
+.checkout-timer-inline {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #92400e;              /* amber-800 */
+  background: #fffbeb;         /* amber-50 */
+  border: 1px solid #fde68a;   /* amber-200 */
+  border-radius: 8px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+}
+
+.checkout-timer-inline .timer-countdown {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: transparent;
+  padding: 0;
+  margin-left: 2px;
+}
+
+/* Timer wrapper for checkout header area */
+.checkout-amount-block {
+  text-align: center;
+  margin: 8px 0 16px;
+}
+
+/* ───────────────────────────────────
+   Timer (large countdown block — used in Countdown component)
+─────────────────────────────────── */
+.timer-wrapper {
+  display: none; /* deprecated — replaced by checkout-timer-inline */
+}
+
+.timer-countdown {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-left: 4px;
+  padding: 1px 6px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 4px;
+}
+
+.countdown-timer {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.timer-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.timer-display-wrapper {
+  margin-bottom: 12px;
+}
+
+.timer-seconds {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  font-family: var(--font-heading);
+}
+
+.timer-unit {
+  font-size: 1rem;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+.timer-bar-container {
+  height: 4px;
+  width: 100%;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+/* Margin and Padding Utilities */
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+.mt-30 { margin-top: 30px; }
+.mt-40 { margin-top: 40px; }
+.mb-40 { margin-bottom: 40px; }
+
+.no-schedules, .loading-text {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0.7;
 }
