@@ -1,46 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Dynamic HSL Palette - Deep Indigo and Amethyst Violet */
-  --primary-h: 265;
-  --primary-s: 85%;
-  --primary-l: 60%;
-  
-  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-  --primary-hover: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 8%));
-  --primary-glow: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.3);
-  
-  --accent: hsl(230, 90%, 65%);
-  --accent-glow: hsla(230, 90%, 65%, 0.35);
+  /* Modern Transit Theme - Amber Yellow & Navy Blue */
+  --primary: #1a3a6b;
+  --primary-hover: #14305a;
+  --primary-text: #D4A800;
+  --primary-glow: rgba(26, 58, 107, 0.25);
 
-  --success: hsl(142, 70%, 45%);
+  --accent: #D4A800;
+  --accent-glow: rgba(212, 168, 0, 0.35);
+
+  --success: hsl(142, 70%, 35%);
   --success-bg: hsl(142, 70%, 95%);
   --success-glow: hsla(142, 70%, 45%, 0.3);
 
-  --danger: hsl(350, 80%, 55%);
+  --danger: hsl(350, 80%, 45%);
   --danger-bg: hsl(350, 80%, 96%);
-  
+
   --warning: hsl(38, 92%, 50%);
   --warning-bg: hsl(38, 92%, 95%);
 
-  --text: #64748b;             /* slate-500: soft secondary labels */
-  --text-heading: #0f172a;    /* slate-950: deep charcoal for primary headings */
-  --text-body: #334155;       /* slate-700: comfortable body copy */
-  --bg: hsl(240, 25%, 98%);
-  
-  --card-bg: hsl(0, 0%, 100%);
-  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --border: hsl(240, 15%, 93%);
-  
-  --glass-bg: rgba(255, 255, 255, 0.75);
+  --text: #2c5282;             /* blue-700 */
+  --text-heading: #1a3a6b;    /* deep navy */
+  --text-body: #2b4a8a;       /* navy-700 */
+  --text-on-bg: #7a5c00;      /* readable brown-gold on amber bg */
+
+  --bg: #D4A800;              /* Amber Yellow background */
+
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 30px -10px rgba(26, 58, 107, 0.1), 0 1px 3px rgba(26, 58, 107, 0.05);
+  --border: rgba(26, 58, 107, 0.15);
+
+  --glass-bg: rgba(255, 255, 255, 0.88);
   --glass-border: rgba(255, 255, 255, 0.5);
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Outfit', sans-serif;
-  
+
   --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --border-radius: 16px;
-  
+
   font-family: var(--font-sans);
   color: var(--text);
   background-color: var(--bg);
@@ -52,17 +51,24 @@
 /* Premium Dark Mode Override */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: hsl(240, 10%, 75%);
-    --text-heading: hsl(0, 0%, 98%);
-    --bg: hsl(240, 20%, 8%);
-    
-    --card-bg: hsl(240, 16%, 12%);
+    --text: #93c5fd;
+    --text-heading: #D4A800;
+    --bg: #0f172a;
+
+    --card-bg: #1e293b;
     --card-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5), 0 1px 5px rgba(0, 0, 0, 0.2);
-    --border: hsl(240, 12%, 18%);
-    
-    --glass-bg: rgba(24, 24, 30, 0.75);
+    --border: rgba(255, 255, 255, 0.1);
+
+    --glass-bg: rgba(15, 23, 42, 0.75);
     --glass-border: rgba(255, 255, 255, 0.05);
-    
+
+    --primary: #D4A800;
+    --primary-hover: #e6b800;
+    --primary-text: #0f172a;
+    --primary-glow: rgba(212, 168, 0, 0.25);
+
+    --text-on-bg: #D4A800;
+
     --success-bg: hsl(142, 60%, 12%);
     --danger-bg: hsl(350, 60%, 13%);
     --warning-bg: hsl(38, 60%, 12%);
@@ -75,7 +81,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   transition: background-color 0.3s ease;
-  overflow: hidden; /* prevent double scrollbars */
+  overflow: hidden;
 }
 
 #root {
@@ -101,7 +107,6 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  /* Enables smooth momentum scrolling on iOS */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -112,14 +117,14 @@ body {
 }
 
 /* ───────────────────────────────────
-   Global Navigation Bar — dark tech
+   Global Navigation Bar — dark navy
 ─────────────────────────────────── */
 .global-nav {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #0f172a;  /* slate-950 deep navy */
-  border-bottom: 1px solid #1e293b; /* slate-800 hairline */
+  background-color: #0f172a;
+  border-bottom: 1px solid #1e293b;
   height: 52px;
   flex-shrink: 0;
   box-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
@@ -140,7 +145,7 @@ body {
   font-weight: 800;
   font-size: 0.9rem;
   letter-spacing: 0.12em;
-  color: #f8fafc;         /* slate-50 */
+  color: #f8fafc;
   margin-right: 8px;
   white-space: nowrap;
   opacity: 0.9;
@@ -162,7 +167,7 @@ body {
   padding: 0 14px;
   height: 100%;
   text-decoration: none;
-  color: #94a3b8;          /* slate-400 — inactive */
+  color: #94a3b8;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: var(--font-sans);
@@ -174,14 +179,14 @@ body {
 }
 
 .global-nav-tab:hover {
-  color: #e2e8f0;          /* slate-200 on hover */
-  border-bottom-color: rgba(99, 102, 241, 0.4);
+  color: #e2e8f0;
+  border-bottom-color: rgba(212, 168, 0, 0.4);
 }
 
 .global-nav-tab-active {
-  color: #f8fafc !important;   /* slate-50 active */
-  border-bottom-color: #6366f1 !important; /* indigo-500 indicator */
-  background: rgba(99, 102, 241, 0.08);    /* subtle indigo tint */
+  color: #D4A800 !important;
+  border-bottom-color: #D4A800 !important;
+  background: rgba(212, 168, 0, 0.08);
 }
 
 .nav-tab-icon {
@@ -211,8 +216,8 @@ body {
 
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 0 0 var(--primary-glow); }
-  70% { box-shadow: 0 0 0 8px rgba(170, 59, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(170, 59, 255, 0); }
+  70% { box-shadow: 0 0 0 8px rgba(26, 58, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(26, 58, 107, 0); }
 }
 
 @keyframes successPulse {
@@ -235,7 +240,7 @@ body {
   animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Typography Overrides - Fix 1: Deep slate hierarchy */
+/* Typography */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 800;
@@ -247,7 +252,7 @@ h1, h2, h3, h4 {
 h1 {
   font-size: 2.5rem;
   line-height: 1.05;
-  background: linear-gradient(135deg, #0f172a 30%, var(--primary) 100%);
+  background: linear-gradient(135deg, var(--text-heading) 30%, #2b6cb0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
@@ -256,14 +261,14 @@ h1 {
 h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
   letter-spacing: -0.025em;
   margin-bottom: 20px;
 }
 
 h3 {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
   letter-spacing: -0.02em;
 }
 
@@ -272,10 +277,14 @@ p, span, label {
   font-weight: 400;
 }
 
-/* Utility: secondary/description text */
 .text-secondary {
-  color: #64748b;
+  color: #2c5282;
   font-size: 0.875rem;
+}
+
+/* Text rendered directly on the amber background */
+.text-on-bg {
+  color: var(--text-on-bg);
 }
 
 /* Layout Containers */
@@ -283,7 +292,7 @@ p, span, label {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  padding: 24px 16px 120px; /* added bottom padding to clear the floating cinema bar */
+  padding: 24px 16px 120px;
   box-sizing: border-box;
   background-color: var(--bg);
   display: flex;
@@ -300,11 +309,11 @@ p, span, label {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--primary);
+  color: var(--text-on-bg);
   margin-top: 4px;
 }
 
-/* Premium Gorgeous Cards */
+/* Cards */
 .bus-card, .payment-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border);
@@ -318,8 +327,8 @@ p, span, label {
 
 .bus-card:hover {
   transform: translateY(-4px);
-  border-color: var(--primary-glow);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px -15px rgba(26, 58, 107, 0.12);
 }
 
 .bus-card-full {
@@ -379,7 +388,7 @@ p, span, label {
 .seats-indicator-fill {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+  background: linear-gradient(90deg, #2b6cb0 0%, #1a3a6b 100%);
   border-radius: 3px;
   transition: width 0.5s ease-out;
 }
@@ -430,7 +439,6 @@ p, span, label {
   opacity: 0.65;
 }
 
-/* Inline legend */
 .seat-legend {
   display: flex;
   justify-content: center;
@@ -455,11 +463,10 @@ p, span, label {
   display: inline-block;
 }
 
-.legend-available .legend-dot { background: #6ee7b7; border: 1px solid #a7f3d0; }
-.legend-selected  .legend-dot { background: #6366f1; }
+.legend-available .legend-dot { background: #f0f4ff; border: 1px solid var(--border); }
+.legend-selected  .legend-dot { background: var(--primary); }
 .legend-taken     .legend-dot { background: #fca5a5; border: 1px solid #fecaca; }
 
-/* High-density 5-column grid: A B | aisle | C D */
 .seat-grid-dense {
   display: grid;
   grid-template-columns: 1fr 1fr 18px 1fr 1fr;
@@ -469,7 +476,6 @@ p, span, label {
   margin: 0 auto;
 }
 
-/* Override seat-btn for compact size */
 .seat-grid-dense .seat-btn {
   width: 100%;
   aspect-ratio: unset;
@@ -481,7 +487,7 @@ p, span, label {
   min-width: 0;
 }
 
-/* Legacy: .seat-map-container is deprecated — use .seat-map-compact */
+/* Seat Map Container (legacy) */
 .seat-map-container {
   display: flex;
   flex-direction: column;
@@ -519,12 +525,11 @@ p, span, label {
   gap: 8px;
 }
 
-/* Fix 3: Softer emerald seat map with row gap spacing */
 .grid-seat-layout {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   column-gap: 8px;
-  row-gap: 16px; /* gap-y-4: increased vertical spacing between rows */
+  row-gap: 16px;
   max-width: 320px;
   margin: 0 auto;
 }
@@ -533,10 +538,10 @@ p, span, label {
   position: relative;
   aspect-ratio: 1;
   border-radius: 10px;
-  border: 1px solid #a7f3d0; /* emerald-200 soft border */
+  border: 1px solid var(--border);
   font-weight: 700;
   font-size: 0.82rem;
-  color: #065f46;             /* emerald-800 deep text on soft bg */
+  color: var(--text-heading);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.15s;
   display: flex;
@@ -544,7 +549,7 @@ p, span, label {
   justify-content: center;
   box-sizing: border-box;
   font-family: var(--font-heading);
-  background: #ecfdf5;        /* emerald-50: soft professional mint */
+  background: #f0f4ff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
@@ -555,24 +560,22 @@ p, span, label {
   left: 4px;
   right: 4px;
   height: 3px;
-  background: rgba(16, 185, 129, 0.18);
+  background: var(--border);
   border-radius: 2px;
 }
 
-/* hover:scale-105 smooth transition */
 .seat-btn:hover:not(:disabled) {
   transform: scale(1.08);
-  background: #d1fae5;        /* emerald-100 on hover */
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  border-color: #6ee7b7;      /* emerald-300 */
+  background: #dbeafe;
+  box-shadow: 0 4px 12px var(--primary-glow);
+  border-color: var(--primary);
 }
 
 .seat-btn-selected {
-  background: #4f46e5 !important; /* solid indigo-600 when selected */
-  border-color: #4f46e5 !important;
-  color: #fff !important;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
-  animation: none;
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-text) !important;
+  box-shadow: 0 4px 14px var(--primary-glow) !important;
 }
 
 .seat-btn-reserved {
@@ -584,9 +587,9 @@ p, span, label {
 }
 
 .seat-btn-booked, .seat-btn-boarded {
-  background: #fef2f2 !important;  /* red-50 soft background */
-  border-color: #fca5a5 !important; /* red-300 */
-  color: #991b1b !important;        /* red-800 text */
+  background: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+  color: #991b1b !important;
   cursor: not-allowed;
   opacity: 0.8;
 }
@@ -609,7 +612,7 @@ p, span, label {
 }
 
 /* ───────────────────────────────────
-   Apple Wallet Skeuomorphic Ticket Card — Compressed
+   Ticket / Boarding Pass Card
 ─────────────────────────────────── */
 .ticket-card {
   position: relative;
@@ -624,9 +627,9 @@ p, span, label {
 }
 
 .ticket-header {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-  color: #fff;
-  padding: 16px 20px;     /* compressed from 28px 24px */
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: 16px 20px;
   text-align: center;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
@@ -641,16 +644,17 @@ p, span, label {
 
 .ticket-route-city {
   font-family: var(--font-heading);
-  font-size: 1.55rem;     /* compressed from 2.2rem */
+  font-size: 1.55rem;
   font-weight: 800;
   letter-spacing: -0.025em;
-  color: #fff;
+  color: var(--primary-text);
   margin: 0;
 }
 
 .ticket-route-arrow {
   font-size: 1.1rem;
   opacity: 0.7;
+  color: var(--primary-text);
 }
 
 .ticket-punch-container {
@@ -670,7 +674,7 @@ p, span, label {
   top: -9px;
   width: 18px;
   height: 18px;
-  background-color: var(--bg); /* matches viewport background to clip card */
+  background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 50%;
   z-index: 10;
@@ -688,20 +692,21 @@ p, span, label {
 }
 
 .ticket-body {
-  padding: 6px 16px 14px;  /* compressed from 8px 24px 28px */
+  padding: 6px 16px 14px;
 }
 
 .ticket-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;        /* was 12px */
+  margin-bottom: 8px;
   font-size: 0.875rem;
 }
 
 .ticket-row span {
   opacity: 0.55;
   font-weight: 500;
+  color: var(--text);
 }
 
 .ticket-row strong {
@@ -711,10 +716,9 @@ p, span, label {
 
 .ticket-qr-section {
   text-align: center;
-  margin-top: 12px;         /* was 24px */
+  margin-top: 12px;
 }
 
-/* QR code display constrained to max 110px so it never dominates */
 .ticket-qr-section > * {
   max-width: 110px;
   margin-left: auto;
@@ -729,7 +733,9 @@ p, span, label {
   letter-spacing: 0.04em;
 }
 
-/* Cinema Slide-Up Floating Selection Bar */
+/* ───────────────────────────────────
+   Floating Selection Bar
+─────────────────────────────────── */
 .floating-bar {
   position: fixed;
   bottom: 0;
@@ -743,7 +749,7 @@ p, span, label {
   border-top: 1px solid var(--glass-border);
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  box-shadow: 0 -15px 35px -5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -15px 35px -5px rgba(26, 58, 107, 0.15);
   padding: 20px 24px 30px;
   box-sizing: border-box;
   z-index: 999;
@@ -775,7 +781,8 @@ p, span, label {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  opacity: 0.6;
+  color: var(--text-on-bg);
+  opacity: 0.8;
 }
 
 .floating-values {
@@ -795,7 +802,9 @@ p, span, label {
   font-family: var(--font-heading);
 }
 
-/* High-End Fintech UI & Cash Slot Acceptor Simulation */
+/* ───────────────────────────────────
+   Cash Slot / Fintech Payment UI
+─────────────────────────────────── */
 .fintech-amount {
   font-size: 2.8rem;
   font-weight: 800;
@@ -850,7 +859,9 @@ p, span, label {
   animation: successPulse 1.5s infinite;
 }
 
-/* Smart Status Badges - Stripe Dashboard Style */
+/* ───────────────────────────────────
+   Status Badges
+─────────────────────────────────── */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -871,15 +882,17 @@ p, span, label {
 }
 
 .badge-available { background-color: var(--success-bg); color: var(--success); }
-.badge-reserved { background-color: var(--warning-bg); color: var(--warning); }
-.badge-booked { background-color: var(--danger-bg); color: var(--danger); }
-.badge-boarded { background-color: hsl(200, 70%, 92%); color: hsl(200, 70%, 42%); }
-.badge-pending { background-color: var(--warning-bg); color: var(--warning); }
-.badge-success { background-color: var(--success-bg); color: var(--success); }
-.badge-danger { background-color: var(--danger-bg); color: var(--danger); }
+.badge-reserved  { background-color: var(--warning-bg); color: var(--warning); }
+.badge-booked    { background-color: var(--danger-bg); color: var(--danger); }
+.badge-boarded   { background-color: hsl(200, 70%, 92%); color: hsl(200, 70%, 42%); }
+.badge-pending   { background-color: var(--warning-bg); color: var(--warning); }
+.badge-success   { background-color: var(--success-bg); color: var(--success); }
+.badge-danger    { background-color: var(--danger-bg); color: var(--danger); }
 .badge-secondary { background-color: var(--border); color: var(--text); }
 
-/* Animated Conductor Validation Badge */
+/* ───────────────────────────────────
+   Conductor Validation Badge
+─────────────────────────────────── */
 .validation-icon-scale {
   width: 80px;
   height: 80px;
@@ -904,7 +917,9 @@ p, span, label {
   box-shadow: 0 10px 25px rgba(244, 67, 54, 0.25);
 }
 
-/* Beautiful Button Design System */
+/* ───────────────────────────────────
+   Button Design System
+─────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -932,58 +947,56 @@ p, span, label {
   font-size: 0.8rem;
 }
 
-/* Fix 2: Solid premium colors instead of heavy gradients */
 .btn-primary {
-  background-color: #4f46e5; /* indigo-600 solid premium purple */
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+  background-color: var(--primary);
+  color: var(--primary-text);
+  box-shadow: 0 2px 8px var(--primary-glow);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #4338ca; /* indigo-700 on hover */
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 
 .btn-gradient {
-  background: #4f46e5; /* solid indigo-600 replacing heavy blue-purple gradient */
-  color: #fff;
+  background: var(--primary);
+  color: var(--primary-text);
   border: none;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 
 .btn-gradient:hover:not(:disabled) {
-  background: #4338ca;
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px var(--primary-glow);
 }
 
 .btn-gradient:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 2px 6px rgba(26, 58, 107, 0.2);
 }
 
 .btn-secondary {
   background-color: var(--card-bg);
-  border: 1px solid #e2e8f0; /* slate-200 subtle border */
-  color: #334155;             /* slate-700 */
+  border: 1px solid #cbd5e1;
+  color: #1a3a6b;
   font-weight: 600;
 }
 
 .btn-secondary:hover {
-  background-color: #f8fafc; /* slate-50 */
-  border-color: #cbd5e1;     /* slate-300 */
+  background-color: #f0f4ff;
+  border-color: #93c5fd;
 }
 
 .btn-disabled, .btn:disabled {
-  background-color: #f1f5f9 !important; /* slate-100 */
-  color: #94a3b8 !important;            /* slate-400 */
+  background-color: #f1f5f9 !important;
+  color: #94a3b8 !important;
   opacity: 1;
   cursor: not-allowed;
   transform: none !important;
   box-shadow: none !important;
 }
 
-/* Fix 2: Destination buttons capped at readable max-width */
 .btn-dest {
   display: block;
   width: 100%;
@@ -998,7 +1011,9 @@ p, span, label {
   border-radius: 14px;
 }
 
-/* Fix 4: Structurally isolated alert boxes, never clipping into content */
+/* ───────────────────────────────────
+   Alert Boxes
+─────────────────────────────────── */
 .alert {
   padding: 14px 16px;
   border-radius: 12px;
@@ -1009,7 +1024,6 @@ p, span, label {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  /* Isolated from boarding pass and ticket card below */
   contain: layout style;
 }
 
@@ -1021,35 +1035,34 @@ p, span, label {
 }
 
 .alert-error {
-  background-color: #fef2f2; /* red-50 */
-  color: #b91c1c;            /* red-700 */
-  border: 1px solid #fecaca; /* red-200 */
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
 .alert-error::before { content: '✕'; }
 
 .alert-warning {
-  background-color: #fffbeb; /* amber-50 */
-  color: #92400e;            /* amber-800 */
-  border: 1px solid #fde68a; /* amber-200 */
+  background-color: #fff8e1;
+  color: #5c3d00;
+  border: 1px solid #ffe082;
 }
 
 /* ───────────────────────────────────
-   Checkout Panel — responsive side-by-side
+   Checkout Panel
 ─────────────────────────────────── */
 .checkout-panel {
-  background-color: #ffffff;
-  border: 1px solid #f1f5f9;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 18px 20px;           /* tighter than before */
+  padding: 18px 20px;
   margin-bottom: 0;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.03);
+  box-shadow: 0 1px 4px rgba(26, 58, 107, 0.04), 0 4px 16px rgba(26, 58, 107, 0.03);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
-/* Side-by-side on wider viewports */
 .checkout-panels-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1064,14 +1077,13 @@ p, span, label {
   }
 }
 
-/* Compact inline timer — accent text line */
 .checkout-timer-inline {
   text-align: center;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #92400e;              /* amber-800 */
-  background: #fffbeb;         /* amber-50 */
-  border: 1px solid #fde68a;   /* amber-200 */
+  color: #5c3d00;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
   border-radius: 8px;
   padding: 6px 14px;
   display: inline-flex;
@@ -1089,17 +1101,16 @@ p, span, label {
   margin-left: 2px;
 }
 
-/* Timer wrapper for checkout header area */
 .checkout-amount-block {
   text-align: center;
   margin: 8px 0 16px;
 }
 
 /* ───────────────────────────────────
-   Timer (large countdown block — used in Countdown component)
+   Timer Components
 ─────────────────────────────────── */
 .timer-wrapper {
-  display: none; /* deprecated — replaced by checkout-timer-inline */
+  display: none;
 }
 
 .timer-countdown {
@@ -1159,7 +1170,9 @@ p, span, label {
   transition: width 1s linear;
 }
 
-/* Margin and Padding Utilities */
+/* ───────────────────────────────────
+   Utilities
+─────────────────────────────────── */
 .mt-10 { margin-top: 10px; }
 .mt-20 { margin-top: 20px; }
 .mt-30 { margin-top: 30px; }

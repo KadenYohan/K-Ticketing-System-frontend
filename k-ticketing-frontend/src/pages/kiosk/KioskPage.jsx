@@ -236,6 +236,9 @@ export default function KioskPage() {
               Confirm Seats & Checkout
             </button>
           </div>
+          
+          {/* Spacer to guarantee the seat map can be scrolled above the floating bar */}
+          <div style={{ height: '220px', width: '100%' }} aria-hidden="true"></div>
         </div>
       )}
 
