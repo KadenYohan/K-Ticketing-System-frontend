@@ -16,13 +16,24 @@
 // ─────────────────────────────────────────────────────────────────────────────
 export const TODAY = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-const DESTINATIONS = ['Manila', 'Baguio', 'Pampanga'];
+const DESTINATIONS = [
+  'One Ayala Makati to Alabang Town Center',
+  'One Ayala Makati to Robinsons Las Pinas',
+  'One Ayala Makati to Calamba',
+  'One Ayala Makati to Imus Cavite',
+  'One Ayala Makati to Ayala South Park',
+  'One Ayala Makati to Nuvali',
+  'One Ayala Makati to Robinsons Antipolo',
+  'One Ayala Makati to SM Masinag',
+  'One Ayala Makati to UP Town Center',
+  'One Ayala Makati to Vista Mall Somo',
+  'One Ayala Makati to Vista Mall Taguig'
+];
 
-const PRICES = {
-  Manila:   500.00,
-  Baguio:   750.00,
-  Pampanga: 350.00,
-};
+const PRICES = DESTINATIONS.reduce((acc, dest) => {
+  acc[dest] = 120.00;
+  return acc;
+}, {});
 
 // 8 departure times per destination per spec (§7.3)
 const DEPARTURE_TIMES = [
@@ -30,76 +41,44 @@ const DEPARTURE_TIMES = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 2. BUS TABLE — 24 buses (8 times × 3 destinations), mixed statuses
+// 2. BUS TABLE
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Build the 24-bus roster for today with realistic availability.
- *
- * Naming:  b_{dest_initial}_{HHMM}
- * E.g.:    b_m_0600 = Manila 06:00
- *
- * Pre-seeded states for testing different UI branches:
- *  - b_m_0600  → departed (past bus)
- *  - b_m_0800  → fully booked (0 seats available)
- *  - b_m_1000  → partially booked (real mix)
- *  - b_b_0600  → departed
- *  - b_b_1200  → has reserved seats (timer running)
- *  - b_p_1400  → scanner test bus (several booked+boarded tickets)
- *  - All others → various available counts for UI realism
- */
 const buildBuses = () => {
   const buses = [];
 
-  const configs = {
-    Manila: [
-      { time: '06:00', id: 'b_m_0600', status: 'departed',  avail:  0, res:  0, booked:  0, boarded: 50 },
-      { time: '08:00', id: 'b_m_0800', status: 'departed',  avail:  0, res:  0, booked:  0, boarded: 50 },
-      { time: '10:00', id: 'b_m_1000', status: 'scheduled', avail:  2, res:  0, booked: 48, boarded:  0 },
-      { time: '12:00', id: 'b_m_1200', status: 'scheduled', avail: 38, res:  2, booked: 10, boarded:  0 },
-      { time: '14:00', id: 'b_m_1400', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '16:00', id: 'b_m_1600', status: 'scheduled', avail: 43, res:  0, booked:  7, boarded:  0 },
-      { time: '18:00', id: 'b_m_1800', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '20:00', id: 'b_m_2000', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-    ],
-    Baguio: [
-      { time: '06:00', id: 'b_b_0600', status: 'departed',  avail:  0, res:  0, booked:  0, boarded: 50 },
-      { time: '08:00', id: 'b_b_0800', status: 'departed',  avail:  0, res:  0, booked:  2, boarded: 48 },
-      { time: '10:00', id: 'b_b_1000', status: 'scheduled', avail: 45, res:  0, booked:  5, boarded:  0 },
-      { time: '12:00', id: 'b_b_1200', status: 'scheduled', avail: 44, res:  4, booked:  2, boarded:  0 },
-      { time: '14:00', id: 'b_b_1400', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '16:00', id: 'b_b_1600', status: 'scheduled', avail: 48, res:  0, booked:  2, boarded:  0 },
-      { time: '18:00', id: 'b_b_1800', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '20:00', id: 'b_b_2000', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-    ],
-    Pampanga: [
-      { time: '06:00', id: 'b_p_0600', status: 'departed',  avail:  0, res:  0, booked:  0, boarded: 50 },
-      { time: '08:00', id: 'b_p_0800', status: 'departed',  avail:  0, res:  0, booked:  0, boarded: 50 },
-      { time: '10:00', id: 'b_p_1000', status: 'scheduled', avail: 46, res:  0, booked:  4, boarded:  0 },
-      { time: '12:00', id: 'b_p_1200', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '14:00', id: 'b_p_1400', status: 'scheduled', avail: 30, res:  2, booked: 12, boarded:  6 },
-      { time: '16:00', id: 'b_p_1600', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '18:00', id: 'b_p_1800', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-      { time: '20:00', id: 'b_p_2000', status: 'scheduled', avail: 50, res:  0, booked:  0, boarded:  0 },
-    ],
-  };
+  DESTINATIONS.forEach((dest, dIdx) => {
+    DEPARTURE_TIMES.forEach((time) => {
+      const id = `b_${dIdx}_${time.replace(':', '')}`;
+      
+      let status = 'scheduled';
+      let avail = 50, res = 0, booked = 0, boarded = 0;
 
-  for (const [dest, rows] of Object.entries(configs)) {
-    for (const r of rows) {
+      if (time === '06:00' || time === '08:00') {
+        status = 'departed';
+        avail = 0; booked = 0; boarded = 50;
+      } else if (time === '10:00') {
+        avail = 2; booked = 48;
+      } else if (time === '12:00') {
+        avail = 38; res = 2; booked = 10;
+      } else if (time === '14:00' && dIdx === 0) {
+        avail = 30; res = 2; booked = 12; boarded = 6;
+      }
+
       buses.push({
-        id:              r.id,
-        destination:     dest,
-        departureDate:   TODAY,
-        departureTime:   r.time,
-        status:          r.status,
-        seatPrice:       PRICES[dest],
-        seatsAvailable:  r.avail,
-        seatsReserved:   r.res,
-        seatsBooked:     r.booked,
-        seatsBoarded:    r.boarded,
+        id,
+        destination: dest,
+        departureDate: TODAY,
+        departureTime: time,
+        status,
+        seatPrice: PRICES[dest],
+        seatsAvailable: avail,
+        seatsReserved: res,
+        seatsBooked: booked,
+        seatsBoarded: boarded,
       });
-    }
-  }
+    });
+  });
 
   return buses;
 };
@@ -107,14 +86,9 @@ const buildBuses = () => {
 export let mockBuses = buildBuses();
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 3. SEAT TABLE — 50 seats per bus, status-mixed to match bus config above
+// 3. SEAT TABLE
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Generates 50 seats for a bus, assigning statuses to match the bus-level
- * availability counts declared above. Reserved seats get a 4-minute expiry
- * timer (enough to see the countdown in action without waiting too long).
- */
 const buildSeatMap = (busId, { avail, res, booked, boarded }) => {
   const seats = [];
   let seatNum = 1;
@@ -131,7 +105,6 @@ const buildSeatMap = (busId, { avail, res, booked, boarded }) => {
     }
   };
 
-  // Fill in the specific order: boarded → booked → reserved → available
   pushSeats(boarded, 'boarded');
   pushSeats(booked,  'booked');
   pushSeats(res,     'reserved');
@@ -140,88 +113,62 @@ const buildSeatMap = (busId, { avail, res, booked, boarded }) => {
   return seats;
 };
 
-const seatConfigs = {
-  b_m_0600: { avail: 0,  res: 0, booked: 0,  boarded: 50 },
-  b_m_0800: { avail: 0,  res: 0, booked: 0,  boarded: 50 },
-  b_m_1000: { avail: 2,  res: 0, booked: 48, boarded: 0  },
-  b_m_1200: { avail: 38, res: 2, booked: 10, boarded: 0  },
-  b_m_1400: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_m_1600: { avail: 43, res: 0, booked: 7,  boarded: 0  },
-  b_m_1800: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_m_2000: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-
-  b_b_0600: { avail: 0,  res: 0, booked: 0,  boarded: 50 },
-  b_b_0800: { avail: 0,  res: 0, booked: 2,  boarded: 48 },
-  b_b_1000: { avail: 45, res: 0, booked: 5,  boarded: 0  },
-  b_b_1200: { avail: 44, res: 4, booked: 2,  boarded: 0  },
-  b_b_1400: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_b_1600: { avail: 48, res: 0, booked: 2,  boarded: 0  },
-  b_b_1800: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_b_2000: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-
-  b_p_0600: { avail: 0,  res: 0, booked: 0,  boarded: 50 },
-  b_p_0800: { avail: 0,  res: 0, booked: 0,  boarded: 50 },
-  b_p_1000: { avail: 46, res: 0, booked: 4,  boarded: 0  },
-  b_p_1200: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_p_1400: { avail: 30, res: 2, booked: 12, boarded: 6  },
-  b_p_1600: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_p_1800: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-  b_p_2000: { avail: 50, res: 0, booked: 0,  boarded: 0  },
-};
-
-export let mockSeats = Object.fromEntries(
-  Object.entries(seatConfigs).map(([busId, cfg]) => [busId, buildSeatMap(busId, cfg)])
-);
+export let mockSeats = {};
+mockBuses.forEach(bus => {
+  mockSeats[bus.id] = buildSeatMap(bus.id, {
+    avail: bus.seatsAvailable,
+    res: bus.seatsReserved,
+    booked: bus.seatsBooked,
+    boarded: bus.seatsBoarded
+  });
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 4. PRE-SEEDED TICKETS — for scanner (T22/T23) testing without booking first
 // ─────────────────────────────────────────────────────────────────────────────
-//
-// QR codes are just the ticketId string — scan these in the scanner to test:
-//   TICKET_VALID_PAMPANGA   → scans as valid (use b_p_1400)
-//   TICKET_USED             → already checked in (invalid)
-//   TICKET_WRONG_BUS        → for wrong bus (invalid)
-//
 export const SCANNER_TEST_TICKET_VALID = 'scan-test-valid-001';
 export const SCANNER_TEST_TICKET_USED  = 'scan-test-used-001';
 export const SCANNER_TEST_TICKET_WRONG = 'scan-test-wrong-001';
 
+const testBusId = 'b_0_1400';
+const wrongBusId = 'b_1_1400';
+
 export let mockTickets = {
   [SCANNER_TEST_TICKET_VALID]: {
     ticketId:       SCANNER_TEST_TICKET_VALID,
-    busId:          'b_p_1400',
+    busId:          testBusId,
     seats:          [1, 2, 3],
     passengerCount: 3,
-    totalAmount:    3 * PRICES['Pampanga'],
+    totalAmount:    3 * 120,
     paymentMethod:  'cash',
     qrCode:         SCANNER_TEST_TICKET_VALID,
-    destination:    'Pampanga',
+    destination:    DESTINATIONS[0],
     departureTime:  '14:00',
     departureDate:  TODAY,
     used_at:        null,
   },
   [SCANNER_TEST_TICKET_USED]: {
     ticketId:       SCANNER_TEST_TICKET_USED,
-    busId:          'b_p_1400',
+    busId:          testBusId,
     seats:          [4, 5],
     passengerCount: 2,
-    totalAmount:    2 * PRICES['Pampanga'],
+    totalAmount:    2 * 120,
     paymentMethod:  'gcash',
     qrCode:         SCANNER_TEST_TICKET_USED,
-    destination:    'Pampanga',
+    destination:    DESTINATIONS[0],
     departureTime:  '14:00',
     departureDate:  TODAY,
-    used_at:        new Date(Date.now() - 15 * 60 * 1000).toISOString(), // checked in 15 min ago
+    used_at:        new Date(Date.now() - 15 * 60 * 1000).toISOString(),
   },
   [SCANNER_TEST_TICKET_WRONG]: {
     ticketId:       SCANNER_TEST_TICKET_WRONG,
-    busId:          'b_m_1400',   // Manila bus, not Pampanga
+    busId:          wrongBusId,
     seats:          [10, 11],
     passengerCount: 2,
-    totalAmount:    2 * PRICES['Manila'],
+    totalAmount:    2 * 120,
     paymentMethod:  'gcash',
     qrCode:         SCANNER_TEST_TICKET_WRONG,
-    destination:    'Manila',
+    destination:    DESTINATIONS[1],
     departureTime:  '14:00',
     departureDate:  TODAY,
     used_at:        null,
@@ -238,13 +185,20 @@ export let mockPayments     = {};
 // 6. RESET HELPER — restore clean initial state (useful for e2e test scripts)
 // ─────────────────────────────────────────────────────────────────────────────
 export const resetMockDatabase = () => {
-  mockBuses        = buildBuses();
-  mockSeats        = Object.fromEntries(
-    Object.entries(seatConfigs).map(([id, cfg]) => [id, buildSeatMap(id, cfg)])
-  );
+  mockBuses = buildBuses();
+  
+  mockSeats = {};
+  mockBuses.forEach(bus => {
+    mockSeats[bus.id] = buildSeatMap(bus.id, {
+      avail: bus.seatsAvailable,
+      res: bus.seatsReserved,
+      booked: bus.seatsBooked,
+      boarded: bus.seatsBoarded
+    });
+  });
+
   mockReservations = {};
   mockPayments     = {};
-  // Keep pre-seeded tickets but reset the scanner-valid ticket's used_at
   mockTickets[SCANNER_TEST_TICKET_VALID].used_at = null;
   mockTickets[SCANNER_TEST_TICKET_USED].used_at  = new Date(Date.now() - 15 * 60 * 1000).toISOString();
 };
