@@ -1,5 +1,7 @@
 
 
+import { BUS_SEAT_CAPACITY } from '../mock/data';
+
 export default function BusList({ buses, onSelectBus }) {
   if (!buses || buses.length === 0) {
     return (
@@ -29,11 +31,11 @@ export default function BusList({ buses, onSelectBus }) {
             <div className="bus-card-body">
               <div className="bus-seats-info">
                 <div className="seats-indicator">
-                  <span className="seats-indicator-fill" style={{ width: `${(bus.seatsAvailable / 50) * 100}%` }}></span>
+                  <span className="seats-indicator-fill" style={{ width: `${(bus.seatsAvailable / BUS_SEAT_CAPACITY) * 100}%` }}></span>
                 </div>
                 <div className="seats-count-label">
                   <span>Available Seats:</span>
-                  <strong>{bus.seatsAvailable} / 50</strong>
+                  <strong>{bus.seatsAvailable} / {BUS_SEAT_CAPACITY}</strong>
                 </div>
               </div>
               

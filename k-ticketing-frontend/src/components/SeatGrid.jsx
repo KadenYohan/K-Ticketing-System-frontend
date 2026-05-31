@@ -4,7 +4,7 @@
  * Layout: [A][B] [AISLE] [C][D]
  * Grid columns: 1fr 1fr | 18px gap | 1fr 1fr
  * Each seat is a compact 34×30px rounded rectangle.
- * 50 seats = 12.5 rows → fits comfortably in ≤55% of viewport height.
+ * 48 seats = 12 rows → fits comfortably in ≤55% of viewport height.
  */
 
 export default function SeatGrid({ seats, selectedSeats, onSeatToggle }) {

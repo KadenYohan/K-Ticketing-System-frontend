@@ -1,12 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { CONFIG } from './config';
 import KioskPage from './pages/kiosk/KioskPage';
 import BookPage from './pages/book/BookPage';
 import ScannerPage from './pages/scanner/ScannerPage';
 
-/* ─────────────────────────────────────────────
-   Persistent Global Navigation Bar
-   Height: 52px fixed at top of viewport
-───────────────────────────────────────────── */
 function NavBar() {
   const { pathname } = useLocation();
 
@@ -45,9 +42,6 @@ function NavBar() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   Dashboard Index Page
-───────────────────────────────────────────── */
 function DashboardPlaceholder() {
   return (
     <div className="page-scroll-area">
@@ -67,9 +61,7 @@ function DashboardPlaceholder() {
 
           <div className="bus-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>
-                1. Self-Service Kiosk Terminal
-              </h3>
+              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>1. Self-Service Kiosk Terminal</h3>
               <p style={{ fontSize: '0.875rem', lineHeight: 1.55, marginBottom: '14px' }}>
                 Simulates the Chromium <code>--kiosk</code> physical installation in departure bays.
                 Supports both GCash QR codes and terminal cash payments.
@@ -82,9 +74,7 @@ function DashboardPlaceholder() {
 
           <div className="bus-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>
-                2. Passenger Booking Portal
-              </h3>
+              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>2. Passenger Booking Portal</h3>
               <p style={{ fontSize: '0.875rem', lineHeight: 1.55, marginBottom: '14px' }}>
                 Mobile-optimized booking app used by passengers on their personal browsers.
                 Restricts transactions to GCash payment processing.
@@ -97,9 +87,7 @@ function DashboardPlaceholder() {
 
           <div className="bus-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>
-                3. Conductor Boarding Scanner
-              </h3>
+              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>3. Conductor Boarding Scanner</h3>
               <p style={{ fontSize: '0.875rem', lineHeight: 1.55, marginBottom: '14px' }}>
                 Mobile scan tool used by terminal conductors to check tickets via HTML5 camera feed
                 and record boarded bus runs.
@@ -120,18 +108,16 @@ function DashboardPlaceholder() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   Root App with Router
-───────────────────────────────────────────── */
 export default function App() {
+  console.log('KIOSK_ENABLED:', CONFIG.KIOSK_ENABLED);
   return (
     <Router>
       <div className="app-shell">
-        <NavBar />
+        {!CONFIG.KIOSK_ENABLED && <NavBar />}
         <main className="app-main">
           <Routes>
             <Route path="/"        element={<DashboardPlaceholder />} />
-            <Route path="/kiosk"   element={<KioskPage />} />
+            <Route path="/kiosk"   element={CONFIG.KIOSK_ENABLED ? <KioskPage /> : <Navigate to="/" replace />} />
             <Route path="/book"    element={<BookPage />} />
             <Route path="/scanner" element={<ScannerPage />} />
           </Routes>

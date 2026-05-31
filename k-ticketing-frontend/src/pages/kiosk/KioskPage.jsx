@@ -9,7 +9,7 @@ import StatusBadge from '../../components/StatusBadge';
 import CountdownTimer from '../../components/CountdownTimer';
 
 export default function KioskPage() {
-  const [step, setStep] = useState(1); // 1: Dest, 2: Bus, 3: Seats, 4: Pay, 5: Ticket
+  const [step, setStep] = useState(1);
   const [destinations, setDestinations] = useState([]);
   const [selectedDest, setSelectedDest] = useState('');
   const [buses, setBuses] = useState([]);
@@ -22,7 +22,6 @@ export default function KioskPage() {
   const [finalTicket, setFinalTicket] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Initial load / reset when returning to step 1
   useEffect(() => {
     if (step === 1) {
       API.getDestinations()
@@ -31,7 +30,6 @@ export default function KioskPage() {
           console.error("Failed to load destinations:", err);
           setErrorMessage("Failed to load destinations. Please try again.");
         });
-      // Clear transactional states
       setSelectedDest('');
       setSelectedBus(null);
       setSelectedSeats([]);
@@ -112,7 +110,6 @@ export default function KioskPage() {
     setStep(3);
   };
 
-  // Timer Expiry Callback Hook trigger
   const timeLeft = useReservationTimer(reservation?.expiresAt, () => {
     if (step === 4) {
       alert("Checkout allocation context limit breached. Returning home.");
@@ -172,7 +169,6 @@ export default function KioskPage() {
         <p className="app-subtitle">Terminal Booking Kiosk</p>
       </header>
 
-      {/* Fix 4: Isolated error banner - contained above flow, never clips into step content */}
       {errorMessage && (
         <div className="alert alert-error fade-in" role="alert">
           {errorMessage}
@@ -211,16 +207,15 @@ export default function KioskPage() {
               Refresh Map Manually
             </button>
           </div>
-          
+
           <SeatGrid seats={seats} selectedSeats={selectedSeats} onSeatToggle={handleSeatToggle} />
-          
+
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
             <button onClick={() => setStep(2)} className="btn btn-secondary btn-large">
               Back to Schedules
             </button>
           </div>
 
-          {/* Cinema style slide-up floating checkout bar */}
           <div className={`floating-bar ${selectedSeats.length > 0 ? 'floating-bar-active' : ''}`}>
             <div className="floating-bar-content">
               <div className="floating-seats-details">
@@ -236,15 +231,13 @@ export default function KioskPage() {
               Confirm Seats & Checkout
             </button>
           </div>
-          
-          {/* Spacer to guarantee the seat map can be scrolled above the floating bar */}
+
           <div style={{ height: '220px', width: '100%' }} aria-hidden="true"></div>
         </div>
       )}
 
       {step === 4 && (
         <div className="fade-in">
-          {/* Centered amount + inline compact timer */}
           <div className="checkout-amount-block">
             <div className="fintech-amount" style={{ color: '#0f172a', marginBottom: '8px' }}>
               ₱{(selectedSeats.length * selectedBus.seatPrice).toFixed(2)}
@@ -256,10 +249,7 @@ export default function KioskPage() {
             </div>
           </div>
 
-          {/* Side-by-side on ≥600px, stacked on mobile */}
           <div className="checkout-panels-grid">
-
-            {/* GCash Panel */}
             <div className="checkout-panel">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                 <span style={{ fontSize: '1.2rem' }}>📱</span>
@@ -275,7 +265,7 @@ export default function KioskPage() {
               ) : (
                 <div style={{ marginTop: '10px' }}>
                   <div className="qr-container">
-                    <img src={payment.qrImageUrl} alt="PayMongo QR" className="payment-qr" style={{ maxWidth: '100px' }} />
+                    <img src={payment.qrImageUrl} alt="PayMongo QR" className="payment-qr" />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
                     <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: 500 }}>Status:</span>
@@ -285,7 +275,6 @@ export default function KioskPage() {
               )}
             </div>
 
-            {/* Cash Slot Panel */}
             <div className="checkout-panel">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                 <span style={{ fontSize: '1.2rem' }}>💵</span>
@@ -317,7 +306,6 @@ export default function KioskPage() {
             <h2 className="success-title">Ticket Issued Successfully!</h2>
           </div>
 
-          {/* Apple Wallet Transit Pass Card */}
           <div className="ticket-card">
             <div className="ticket-header">
               <div className="ticket-route">
@@ -355,9 +343,9 @@ export default function KioskPage() {
                 <span>Total Amount</span>
                 <strong>₱{finalTicket.totalAmount.toFixed(2)}</strong>
               </div>
-              
+
               <hr className="ticket-divider" />
-              
+
               <div className="ticket-qr-section">
                 <QRCodeDisplay value={finalTicket.qrCode} />
                 <p className="ticket-id">Ticket ID: {finalTicket.ticketId}</p>

@@ -251,7 +251,7 @@ export default function BookPage() {
               <div className="gcash-payment-info">
                 <p style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '14px', lineHeight: 1.5 }}>Scan this QR or tap the link below to pay via PayMongo:</p>
                 <div className="qr-container">
-                  <img src={payment.qrImageUrl} alt="GCash Sandbox QR" className="payment-qr" style={{ maxWidth: '100px' }} />
+                  <img src={payment.qrImageUrl} alt="GCash Sandbox QR" className="payment-qr" />
                 </div>
 
                 <a href={payment.redirectUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-gradient btn-large mt-20" style={{ display: 'inline-block', textDecoration: 'none' }}>

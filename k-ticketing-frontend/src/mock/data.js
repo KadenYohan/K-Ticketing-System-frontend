@@ -40,6 +40,8 @@ const DEPARTURE_TIMES = [
   '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00',
 ];
 
+export const BUS_SEAT_CAPACITY = 48;
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 2. BUS TABLE
 // ─────────────────────────────────────────────────────────────────────────────
@@ -52,17 +54,17 @@ const buildBuses = () => {
       const id = `b_${dIdx}_${time.replace(':', '')}`;
       
       let status = 'scheduled';
-      let avail = 50, res = 0, booked = 0, boarded = 0;
+      let avail = BUS_SEAT_CAPACITY, res = 0, booked = 0, boarded = 0;
 
       if (time === '06:00' || time === '08:00') {
         status = 'departed';
-        avail = 0; booked = 0; boarded = 50;
+        avail = 0; booked = 0; boarded = BUS_SEAT_CAPACITY;
       } else if (time === '10:00') {
-        avail = 2; booked = 48;
+        avail = 2; booked = BUS_SEAT_CAPACITY - 2;
       } else if (time === '12:00') {
-        avail = 38; res = 2; booked = 10;
+        avail = 36; res = 2; booked = 10;
       } else if (time === '14:00' && dIdx === 0) {
-        avail = 30; res = 2; booked = 12; boarded = 6;
+        avail = 28; res = 2; booked = 12; boarded = 6;
       }
 
       buses.push({
@@ -95,7 +97,7 @@ const buildSeatMap = (busId, { avail, res, booked, boarded }) => {
   const expiresAt = new Date(Date.now() + 4 * 60 * 1000).toISOString();
 
   const pushSeats = (count, status) => {
-    for (let i = 0; i < count && seatNum <= 50; i++, seatNum++) {
+    for (let i = 0; i < count && seatNum <= BUS_SEAT_CAPACITY; i++, seatNum++) {
       seats.push({
         seatId:              seatNum,
         seatNumber:          seatNum,

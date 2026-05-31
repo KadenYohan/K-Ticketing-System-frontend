@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:kiosk": "vite --mode kiosk",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:kiosk": "vite build --mode kiosk"
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",
