@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API } from '../../api';
-import SeatGrid from '../../components/SeatGrid';
+import SeatGrid, { seatLabel } from '../../components/SeatGrid';
 import BusList from '../../components/BusList';
 import { useReservationTimer } from '../../hooks/useReservationTimer';
 import { usePaymentPolling } from '../../hooks/usePaymentPolling';
@@ -201,38 +201,107 @@ export default function KioskPage() {
 
       {step === 3 && (
         <div className="fade-in">
-          <h2 style={{ textAlign: 'center' }}>Choose Your Seats</h2>
-          <div className="button-group">
-            <button onClick={() => refreshSeatMap(selectedBus.id)} className="btn btn-small btn-secondary">
-              Refresh Map Manually
-            </button>
-          </div>
+          {/* Page Title */}
+          <h2 style={{ textAlign: 'center', marginBottom: '4px' }}>Choose Your Seat</h2>
+          <p style={{ textAlign: 'center', fontSize: '0.85rem', color: '#2c5282', marginBottom: '12px', fontWeight: 500 }}>
+            Select seating location for {selectedSeats.length > 0 ? selectedSeats.length : '—'} passenger(s)
+          </p>
 
-          <SeatGrid seats={seats} selectedSeats={selectedSeats} onSeatToggle={handleSeatToggle} />
+          <SeatGrid
+            seats={seats}
+            selectedSeats={selectedSeats}
+            onSeatToggle={handleSeatToggle}
+            busInfo={{
+              busName: selectedBus?.busName || selectedBus?.name || 'K-LINE BUS',
+              plateNumber: selectedBus?.plateNumber || selectedBus?.plate || '—',
+              departureTime: selectedBus?.departureTime || selectedBus?.time || '—',
+              destination: selectedDest || '—',
+            }}
+            seatBookingTimeLeft={null}
+          />
 
-          <div style={{ textAlign: 'center', marginTop: '16px' }}>
-            <button onClick={() => setStep(2)} className="btn btn-secondary btn-large">
-              Back to Schedules
-            </button>
-          </div>
-
-          <div className={`floating-bar ${selectedSeats.length > 0 ? 'floating-bar-active' : ''}`}>
-            <div className="floating-bar-content">
-              <div className="floating-seats-details">
-                <span className="floating-label">Selected Seats</span>
-                <span className="floating-values">{selectedSeats.join(', ') || 'None'}</span>
+          {/* Selected seats summary */}
+          {selectedSeats.length > 0 && (
+            <div style={{
+              background: '#1a3a6b',
+              border: '2px solid #D4A800',
+              borderRadius: '14px',
+              padding: '12px 18px',
+              margin: '12px 0',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              boxShadow: '0 0 0 3px rgba(212,168,0,0.15)',
+              animation: 'fadeIn 0.3s ease'
+            }}>
+              <div>
+                <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#D4A800', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Selected Seats</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#f8fafc', marginTop: '2px' }}>{selectedSeats.map(seatLabel).join(', ')}</div>
               </div>
-              <div className="floating-price-details">
-                <span className="floating-label">Total Price</span>
-                <span className="floating-price">₱{(selectedSeats.length * selectedBus.seatPrice).toFixed(2)}</span>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#D4A800', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Total</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#D4A800', fontFamily: 'var(--font-heading)' }}>
+                  ₱{(selectedSeats.length * selectedBus.seatPrice).toFixed(2)}
+                </div>
               </div>
             </div>
-            <button onClick={handleReserve} disabled={selectedSeats.length === 0} className="btn btn-primary btn-gradient btn-large">
-              Confirm Seats & Checkout
+          )}
+
+          {/* Confirm button */}
+          <button
+            onClick={handleReserve}
+            disabled={selectedSeats.length === 0}
+            className="btn btn-primary btn-gradient btn-large"
+            style={{ marginTop: '6px', fontSize: '1.05rem', letterSpacing: '0.02em', fontWeight: 800 }}
+          >
+            ✓ Confirm Seats & Checkout
+          </button>
+
+          {/* Kiosk-style big bottom action buttons */}
+          <div style={{ display: 'flex', gap: '10px', marginTop: '14px', marginBottom: '32px' }}>
+            <button
+              onClick={() => setStep(1)}
+              id="btn-cancel-seat-selection"
+              style={{
+                flex: '0 0 auto',
+                padding: '14px 28px',
+                background: '#dc2626',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-heading)',
+                letterSpacing: '0.01em',
+                boxShadow: '0 4px 12px rgba(220,38,38,0.35)',
+                transition: 'all 0.2s'
+              }}
+            >
+              ✕ Cancel
+            </button>
+            <button
+              onClick={() => setStep(2)}
+              id="btn-return-to-schedules"
+              style={{
+                flex: 1,
+                padding: '14px 20px',
+                background: '#d97706',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-heading)',
+                letterSpacing: '0.01em',
+                boxShadow: '0 4px 12px rgba(217,119,6,0.35)',
+                transition: 'all 0.2s'
+              }}
+            >
+              ← Return to Previous Screen
             </button>
           </div>
-
-          <div style={{ height: '220px', width: '100%' }} aria-hidden="true"></div>
         </div>
       )}
 
