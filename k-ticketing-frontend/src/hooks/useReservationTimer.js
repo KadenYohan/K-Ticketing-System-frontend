@@ -22,7 +22,7 @@ export function useReservationTimer(expiresAt, onTimeout) {
     calculateTime();
     const timer = setInterval(calculateTime, 1000);
     return () => clearInterval(timer);
-  }, [expiresAt]);
+  }, [expiresAt, onTimeout]);
 
   return timeLeft;
 }
