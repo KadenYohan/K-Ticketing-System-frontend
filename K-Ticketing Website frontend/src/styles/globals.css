@@ -1,0 +1,39 @@
+/* K-Ticketing responsive helpers */
+@media (max-width: 768px) {
+  .seat-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .payment-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .hiw-step {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
+  }
+  .grid-cols-footer {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Inter font override for all elements */
+* {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default margin/padding on h tags (let design system control) */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}

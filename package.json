@@ -1,0 +1,11 @@
+{
+  "name": "k-ticketing-system-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx concurrently \"npm run dev:kiosk\" \"npm run dev:website\"",
+    "dev:kiosk": "cd k-ticketing-frontend && npm run dev",
+    "dev:website": "cd \"K-Ticketing Website frontend\" && npm run dev",
+    "install:all": "cd k-ticketing-frontend && npm install --legacy-peer-deps && cd ../\"K-Ticketing Website frontend\" && npm install --legacy-peer-deps"
+  }
+}

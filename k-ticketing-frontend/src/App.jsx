@@ -98,6 +98,18 @@ function DashboardPlaceholder() {
             </Link>
           </div>
 
+          <div className="bus-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h3 style={{ margin: '0 0 6px 0', fontSize: '1.15rem' }}>4. Modern Website Frontend</h3>
+              <p style={{ fontSize: '0.875rem', lineHeight: 1.55, marginBottom: '14px' }}>
+                The modernized version of the booking web app designed in Figma, running on port 5174.
+              </p>
+            </div>
+            <a href="http://localhost:5174" target="_blank" rel="noreferrer" id="dash-launch-website" className="btn btn-primary btn-gradient" style={{ textDecoration: 'none', display: 'inline-flex', maxWidth: '240px', background: 'linear-gradient(135deg, #AA3BFF, #7C3AED)', border: 'none', color: '#fff' }}>
+              Open K-Ticketing Website ↗
+            </a>
+          </div>
+
         </div>
 
         <footer style={{ marginTop: 'auto', paddingTop: '32px', fontSize: '0.78rem', opacity: 0.45, textAlign: 'center' }}>
